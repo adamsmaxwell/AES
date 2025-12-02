@@ -1,0 +1,38 @@
+:root {
+      --alternate-color: #E3FDFD;
+      --secondary-color: #CBF1F5;
+      --primary-color: #A6E3E9;
+      --tertiary-color: #71C9CE;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: var(--tertiary-color);
+    color: white;
+    padding: 5px;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+footer {
+    background-color: var(--tertiary-color);
+    color: white;
+    padding: 5px;
+    text-align: center;
+}
