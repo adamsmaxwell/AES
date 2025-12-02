@@ -1,0 +1,12 @@
+<!-- Footer file for AMES -->
+<footer>
+        <p>&copy; 2024-<span id="currentYear"></span> Adams Maxwell Enterprise System. All rights reserved.</p>
+</footer>
+<script>
+    // Get the current date
+    const date = new Date();
+    // Extract the full year from the date object
+    const year = date.getFullYear();
+    // Find the HTML element by its ID and update its innerHTML with the current year
+    document.getElementById("currentYear").innerHTML = year;
+</script>
