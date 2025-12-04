@@ -1,38 +1,39 @@
 :root {
-      --alternate-color: #E3FDFD;
-      --secondary-color: #CBF1F5;
       --primary-color: #A6E3E9;
+      --secondary-color: #CBF1F5;
       --tertiary-color: #71C9CE;
+      --quaternary-color: #E3FDFD;
+
+      --header-footer-color: var(--tertiary-color);
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    font-family: "Times New Roman", serif;
 }
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-family: Arial, sans-serif;
 }
 
 header {
-    background-color: var(--tertiary-color);
+    background-color: var(--header-footer-color);
     color: white;
-    padding: 5px;
     text-align: center;
+    margin: 0px;
 }
 
 main {
     flex: 1;
     padding: 20px;
+    border: 1px black solid;
 }
 
 footer {
-    background-color: var(--tertiary-color);
+    background-color: var(--header-footer-color);
     color: white;
-    padding: 5px;
+    margin: 0px;
+    padding: 0px;
     text-align: center;
 }
