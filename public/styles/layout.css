@@ -1,12 +1,12 @@
     :root {
-      --primary-color: #A6E3E9;
-      --secondary-color: #CBF1F5;
-      --tertiary-color: #71C9CE;
-      --quaternary-color: #E3FDFD;
+      --primary-color: #452829;
+      --secondary-color: #57595B;
+      --tertiary-color: #E8D1C5;
+      --quaternary-color: #F3E8DF;
 
       --header-footer-color: var(--tertiary-color);
-      --menu-color: rgb(203, 203, 240);
-      --content-color: palegreen;
+      --menu-color: var(--quaternary-color);
+      --content-color: #EFF7F7;
     }
       
     html, body {
@@ -27,14 +27,14 @@
 
     header {
         background-color: var(--header-footer-color);
-        color: white;
+        color: var(--primary-color);
         padding: 0px;
         text-align: center;
     }
     
     footer {
         background-color: var(--header-footer-color);
-        color: white;
+        color: var(--primary-color);
         padding: 0px;
         text-align: center;
     }
@@ -43,7 +43,6 @@
             display:flex;
             flex-direction: row;
             gap: 5px;
-            border: 1px solid red;
             height: 90vh;
         }
 
