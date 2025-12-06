@@ -1,5 +1,5 @@
 {
-  "name": "ames",
+  "name": "aes",
   "version": "0.1.0",
   "description": "Adams-Maxwell Enterprise System",
   "main": "index.js",
@@ -18,13 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adamsmaxwell/AMES.git"
+    "url": "git+https://github.com/adamsmaxwell/AES.git"
   },
   "keywords": [],
   "author": "Jeff Armstrong",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/adamsmaxwell/AMES/issues"
+    "url": "https://github.com/adamsmaxwell/AES/issues"
   },
-  "homepage": "https://github.com/adamsmaxwell/AMES#readme"
+  "homepage": "https://github.com/adamsmaxwell/AES#readme",
+  "devDependencies": {}
 }

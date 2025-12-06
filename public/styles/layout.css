@@ -39,14 +39,14 @@
         text-align: center;
     }
 
-    .ames-home {
+    .aes-home {
             display:flex;
             flex-direction: row;
             gap: 5px;
             height: 90vh;
         }
 
-    .ames-menu {
+    .aes-menu {
         display:flex;
         flex-direction: column;
         gap: 5px;
@@ -56,7 +56,7 @@
         padding: 15px;
     }
     
-    .ames-content {
+    .aes-content {
         background-color: var(--content-color);
         text-align: center;
         width:100%;

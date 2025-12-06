@@ -94,5 +94,5 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`AMES server listening on port ${port}`);
+  console.log(`AES server listening on port ${port}`);
 });
