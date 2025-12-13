@@ -9,13 +9,35 @@
 </head>
 <body>
 	<div class="page-wrapper">
-        <%- include("partials/header.ejs") %>        
+        <header>
+            <h2>Job Detail</h2>
+        </header>
 		<main>
 			<div class="aes-home">
                 <%- include("partials/aes-menu.ejs") %>
 
                 <section class="aes-content">
-                    <p>This is the AES Job Detail Page</p>
+
+                    <form action="/home">
+
+                        <div class="form-group">
+                            <label class="form-label" for="jobno">Job Number:</label>
+                            <input type="text" id="job-no" name="job-no">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="coast-pn">Coast Part:</label>
+                            <input type="text" id="coast-pn" name="coast-pn">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="customer">Customer:</label>
+                            <input type="text" id="customer" name="customer">
+                        </div>
+                        <br>
+                        <input style="width: 150px;" type="submit" value="Search">
+                    </form>
+
                 </section>
             </div>
 		</main>

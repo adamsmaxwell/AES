@@ -1,69 +1,89 @@
-    :root {
-      --primary-color: #452829;
-      --secondary-color: #57595B;
-      --tertiary-color: #E8D1C5;
-      --quaternary-color: #F3E8DF;
+:root {
+    --primary-color: #452829;
+    --secondary-color: #57595B;
+    --tertiary-color: #E8D1C5;
+    --quaternary-color: #F3E8DF;
 
-      --header-footer-color: var(--tertiary-color);
-      --menu-color: var(--quaternary-color);
-      --content-color: #EFF7F7;
-    }
-      
-    html, body {
-        margin: 0;
-        height: 100%; /* Ensure html and body take full viewport height */
-        font-family: "Times New Roman", serif;
-    }
-
-    .page-wrapper {
-        display: flex;
-        flex-direction: column; /* Stack items vertically */
-        min-height: 100vh; /* Ensure wrapper takes at least full viewport height */
-    }
-
-    main {
-        flex: 1; /* Allows main content to grow and push footer down */
-    }
-
-    header {
-        background-color: var(--header-footer-color);
-        color: var(--primary-color);
-        padding: 0px;
-        text-align: center;
-    }
+    --header-footer-color: var(--tertiary-color);
+    --menu-color: var(--quaternary-color);
+    --content-color: #EFF7F7;
+}
     
-    footer {
-        background-color: var(--header-footer-color);
-        color: var(--primary-color);
-        padding: 0px;
-        text-align: center;
-    }
+html, body {
+    margin: 0;
+    height: 100%; /* Ensure html and body take full viewport height */
+    font-family: "Times New Roman", serif;
+}
 
-    .aes-home {
-            display:flex;
-            flex-direction: row;
-            gap: 5px;
-            height: 90vh;
-        }
+.page-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    min-height: 100vh; /* Ensure wrapper takes at least full viewport height */
+}
 
-    .aes-menu {
+main {
+    flex: 1; /* Allows main content to grow and push footer down */
+}
+
+header {
+    background-color: var(--header-footer-color);
+    color: var(--primary-color);
+    padding: 0px;
+    text-align: center;
+}
+
+footer {
+    background-color: var(--header-footer-color);
+    color: var(--primary-color);
+    padding: 0px;
+    text-align: center;
+}
+
+.aes-home {
         display:flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 5px;
-        background-color: var(--menu-color);
-        text-align: left;
-        font-size: large;
-        padding: 15px;
+        height: 90vh;
     }
-    
-    .aes-content {
-        background-color: var(--content-color);
-        text-align: center;
-        width:100%;
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        height: 100%; 
-        border: 1px solid black;
-        font-size: 4rem;
-    }
+
+.aes-menu {
+    display:flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: var(--menu-color);
+    text-align: left;
+    font-size: large;
+    padding: 15px;
+}
+
+.aes-content {
+    background-color: var(--content-color);
+    text-align: center;
+    width:100%;
+    display: flex; 
+    align-items:flex-start; 
+    justify-content: center; 
+    height: 100%; 
+    border: 1px solid black;
+    font-size: 1.2rem;
+    padding-top: 10%;
+    padding-right: 10%;
+}
+
+.job-det {
+    font-size:1.5rem;
+    color: rebeccapurple;
+}
+
+.form-group {
+    display: flex;
+    align-items: center; /* Vertically centers the label and input */
+    gap: 10px; /* Adds space between the label and input */
+    margin-bottom: 10px; /* Adds space between form groups */
+}
+
+.form-label {
+    width:100px;
+    text-align: right;
+    margin-top: 5px;
+}
