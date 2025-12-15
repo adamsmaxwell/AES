@@ -1,7 +1,14 @@
 import express from "express";
+import ejs from "ejs";
+import bodyParser from "body-parser";
+
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 3000;
 
@@ -14,8 +21,22 @@ app.get('/home', (req, res) => {
 });
 
 app.get('/job-detail', (req, res) => {
-   res.render('job-detail.ejs');
-});
+      res.render('job-detail.ejs');
+   }
+);
+
+app.post('/jobdet-search', (req,res)=>
+   {
+      var fileName = __dirname+"/views/index.ejs";
+      const jobNo = req.body["job-no"];
+      const coastPN = req.body["coast-pn"];
+      const customer = req.body["customer"];
+
+      console.info(`Job No: ${jobNo}, Coast PN: ${coastPN}, Customer: ${customer}`);
+
+      res.render('job-detail.ejs', {jobNo: jobNo, coastPN: coastPN, customer: customer});
+   }
+);
 
 app.get('/job-matrix', (req, res) => {
    res.render('job-matrix.ejs');
