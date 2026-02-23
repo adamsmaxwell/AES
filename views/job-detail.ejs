@@ -16,37 +16,54 @@
 			<div class="aes-home">
                 <%- include("partials/aes-menu.ejs") %>
 
+                <%
+                    var jobNo="";
+                    var coastPN="";
+                    var custPN=""; 
+                    if (locals.JobNo) 
+                    { 
+                        jobNo=locals.JobNo;
+                        coastPN=locals.CoastPN;
+                        custPN=locals.CustPN;
+                    }
+                %>                    
+
                 <section class="aes-content">
-
-                    <form action="/jobdet-search" method="POST">
-
+                    <form action="/jobdet-search-jobno" method="POST">
                         <div class="form-group">
                             <label class="form-label" for="jobno">Job Number:</label>
-                            <input type="text" id="job-no" name="job-no">
+                            <input type="text" id="job-no" name="job-no" placeholder="Enter Job Number" value="<%= jobNo %>">
+                            <input style="width: 100px;" type="submit" id="search-jobno" name="job-search" value="Search">
+                            <input style="width: 60px;" type="submit" id="prev-jobno" name="job-search" value="Prev">
+                            <input style="width: 60px;" type="submit" id="next-jobno" name="job-search" value="Next">
                         </div>
+                    </form>
 
+                    <form action="/jobdet-search-coastpn" method="POST">
                         <div class="form-group">
                             <label class="form-label" for="coast-pn">Coast Part:</label>
-                            <input type="text" id="coast-pn" name="coast-pn">
+                            <input type="text" id="coast-pn" name="coast-pn" placeholder="Enter Coast Part Number" value="<%= coastPN %>">
+                            <input style="width: 100px;" type="submit" id="search-coastpn" value="Search">
+                            <input style="width: 60px;" type="submit" id="prev-coastpn" value="Prev">
+                            <input style="width: 60px;" type="submit" id="next-coastpn" value="Next">
                         </div>
+                    </form>
 
+                    <form action="/jobdet-search-cust" method="POST">
                         <div class="form-group">
-                            <label class="form-label" for="customer">Customer:</label>
-                            <input type="text" id="customer" name="customer">
+                            <label class="form-label" for="cust-pn">Customer&nbsp;PN:</label>
+                            <input type="text" id="cust-pn" name="cust-pn" placeholder="Enter Customer Part Number" value="<%= custPN %>">
+                            <input style="width: 100px;" type="submit" id="search-cust-pn" value="Search">
+                            <input style="width: 60px;" type="submit" id="prev-cust-pn" value="Prev">
+                            <input style="width: 60px;" type="submit" id="next-cust-pn" value="Next">
                         </div>
-                        <br>
-                        <input style="width: 150px;" type="submit" value="Search">
-
-                        <!-- EJS specific part: Display message if available -->
-                        <% if (locals.jobNo) { %>
-                            <p><strong><%= jobNo %> <%= coastPN %> <%= customer %></strong></p>
-                        <% } %>                    
                     </form>
                 </section>
             </div>
 		</main>
 
-        <%- include("partials/footer.ejs") %>        
+
+        <%- include("partials/footer.ejs") %>
 	</div>
     <script 
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 

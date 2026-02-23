@@ -9,9 +9,11 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "body-parser": "^1.20.2",
     "bootstrap": "^5.3.8",
     "ejs": "^3.1.10",
-    "express": "^4.22.1"
+    "express": "^4.22.1",
+    "mysql2": "^3.16.1"
   },
   "engines": {
     "node": ">=14"
@@ -26,6 +28,5 @@
   "bugs": {
     "url": "https://github.com/adamsmaxwell/AES/issues"
   },
-  "homepage": "https://github.com/adamsmaxwell/AES#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/adamsmaxwell/AES#readme"
 }
