@@ -43,19 +43,19 @@
                         <div class="form-group">
                             <label class="form-label" for="coast-pn">Coast Part:</label>
                             <input type="text" id="coast-pn" name="coast-pn" placeholder="Enter Coast Part Number" value="<%= coastPN %>">
-                            <input style="width: 100px;" type="submit" id="search-coastpn" value="Search">
-                            <input style="width: 60px;" type="submit" id="prev-coastpn" value="Prev">
-                            <input style="width: 60px;" type="submit" id="next-coastpn" value="Next">
+                            <input style="width: 100px;" type="submit" id="search-coastpn" name="coastpn-search" value="Search">
+                            <input style="width: 60px;" type="submit" id="prev-coastpn" name="coastpn-search" value="Prev">
+                            <input style="width: 60px;" type="submit" id="next-coastpn" name="coastpn-search" value="Next">
                         </div>
                     </form>
 
-                    <form action="/jobdet-search-cust" method="POST">
+                    <form action="/jobdet-search-custpn" method="POST">
                         <div class="form-group">
                             <label class="form-label" for="cust-pn">Customer&nbsp;PN:</label>
                             <input type="text" id="cust-pn" name="cust-pn" placeholder="Enter Customer Part Number" value="<%= custPN %>">
-                            <input style="width: 100px;" type="submit" id="search-cust-pn" value="Search">
-                            <input style="width: 60px;" type="submit" id="prev-cust-pn" value="Prev">
-                            <input style="width: 60px;" type="submit" id="next-cust-pn" value="Next">
+                            <input style="width: 100px;" type="submit" id="search-cust-pn" name="custpn-search" value="Search">
+                            <input style="width: 60px;" type="submit" id="prev-cust-pn" name="custpn-search" value="Prev">
+                            <input style="width: 60px;" type="submit" id="next-cust-pn" name="custpn-search" value="Next">
                         </div>
                     </form>
                 </section>

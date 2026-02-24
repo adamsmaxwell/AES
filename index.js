@@ -25,7 +25,7 @@ const pool = mysql.createPool({
     queueLimit: 0             // Default: 0, no limit on queued requests
 });
 
-// Function to execute queries using the pool
+// Function to execute queries on the Job table using the pool
 async function queryJobInfo(sqlQuery, jobNoParam) 
 {
    var retVal = null;
@@ -40,17 +40,22 @@ async function queryJobInfo(sqlQuery, jobNoParam)
          [jobNoParam]
          );
 
-      var rowItem = rows[0];
-      var jobNo = rowItem.JobNo.trim();
-      var coastPN = rowItem.CoastPN.trim();
-      var custPN = rowItem.CustPN.trim();
-      console.log(`queryJobInfo: JobNo: ${jobNo}, CoastPN: ${coastPN}, Cust PN: ${custPN}`);
-      retVal = 
-      {
-         "JobNo": jobNo,
-         "CoastPN": coastPN,
-         "CustPN": custPN
-      };
+      if (rows.length > 0) {
+         var rowItem = rows[0];
+         var jobNo = rowItem.JobNo.trim();
+         var coastPN = (rowItem.CoastPN == null) ? "<null>" : rowItem.CoastPN.trim();
+         var custPN = (rowItem.CustPN == null) ? "<null>" : rowItem.CustPN.trim();
+         // var custPN = "";
+         // if (rowItem.CustPN !== null)
+         //    custPN = rowItem.CustPN.trim();
+         console.log(`queryJobInfo: JobNo: ${jobNo}, CoastPN: ${coastPN}, Cust PN: ${custPN}`);
+         retVal = 
+         {
+            "JobNo": jobNo,
+            "CoastPN": coastPN,
+            "CustPN": custPN
+         };
+      }
 
       // Release the connection back to the pool
       connection.release();
@@ -87,6 +92,106 @@ async function findJob(req,res) {
    }   
 };
 
+async function findPrevJob(req,res) {
+   const jobNo = req.body["job-no"];
+
+   if ((jobNo != null) && (jobNo != '')) {
+      var result = await queryJobInfo(
+         'SELECT JobNo, CoastPN, CustPN from aes.job WHERE JobNo < ? ORDER BY JobNo DESC LIMIT 1',
+         jobNo);
+
+      if (result != null) {
+         res.render('job-detail.ejs', result);
+      }
+   }   
+};
+
+async function findNextJob(req,res) {
+   const jobNo = req.body["job-no"];
+
+   if ((jobNo != null) && (jobNo != '')) {
+      var result = await queryJobInfo(
+         'SELECT JobNo, CoastPN, CustPN from aes.job WHERE JobNo > ? ORDER BY JobNo ASC LIMIT 1',
+         jobNo);
+      if (result != null) {
+         res.render('job-detail.ejs', result);
+      }
+   }   
+};
+
+async function findCoastPN(req,res) {
+   const coastPN = req.body["coast-pn"];
+
+   if ((coastPN != null) && (coastPN != '')) {
+      var result = await queryJobInfo('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE coastPN = ?', coastPN);
+      if (result != null) {
+         res.render('job-detail.ejs', result);
+      }
+   }   
+};
+
+async function findPrevCoastPN(req,res) {
+   const coastPN = req.body["coast-pn"];
+
+   if ((coastPN != null) && (coastPN != '')) {
+      var result = await queryJobInfo(
+         'SELECT JobNo, CoastPN, CustPN from aes.job WHERE CoastPN < ? ORDER BY CoastPN DESC LIMIT 1',
+         coastPN);
+
+      if (result != null) {
+         res.render('job-detail.ejs', result);
+      }
+   }   
+};
+
+async function findNextCoastPN(req,res) {
+   const coastPN = req.body["coast-pn"];
+
+   if ((coastPN != null) && (coastPN != '')) {
+      var result = await queryJobInfo(
+         'SELECT JobNo, CoastPN, CustPN from aes.job WHERE CoastPN > ? ORDER BY CoastPN ASC LIMIT 1',
+         coastPN);
+
+      if (result != null) {
+         res.render('job-detail.ejs', result);
+      }
+   }   
+};
+
+async function findCustPN(req,res) {
+   const custPN = req.body["cust-pn"];
+
+   if ((custPN != null) && (custPN != '')) {
+      var result = await queryJobInfo('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE CustPN = ?', custPN);
+      if (result != null) {
+         res.render('job-detail.ejs', result);
+      }
+   }   
+};
+
+async function findPrevCustPN(req,res) {
+   const custPN = req.body["cust-pn"];
+
+   if ((custPN != null) && (custPN != '')) {
+      var result = await queryJobInfo('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE CustPN < ? ORDER BY CustPN DESC LIMIT 1', custPN);
+      if (result != null) {
+         res.render('job-detail.ejs', result);
+      }
+   }   
+};
+
+async function findNextCustPN(req,res) {
+   const custPN = req.body["cust-pn"];
+
+   if ((custPN != null) && (custPN != '')) {
+      var result = await queryJobInfo('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE CustPN > ? ORDER BY CustPN ASC LIMIT 1', custPN);
+      if (result != null) {
+         res.render('job-detail.ejs', result);
+      }
+   }   
+};
+
+
 app.post(
    "/jobdet-search-jobno", 
    (req, res) => 
@@ -98,10 +203,52 @@ app.post(
          findJob(req,res);
       } else if (action === "Prev") {
          // Find the previous Job
-         console.log("Prev button was clicked");
+         findPrevJob(req,res);
       } else if (action === "Next") {
          // Find the next Job
-         console.log("Next button was clicked");
+         findNextJob(req,res);
+      } else {
+         console.log(`Unexpected button press '${action}'`);
+      }
+   }
+);
+
+app.post(
+   "/jobdet-search-coastpn", 
+   (req, res) => 
+   {
+      const action = req.body["coastpn-search"]; // This will be 'Search', 'Prev' or 'Next'
+
+      if (action === "Search") {
+         // Find the specified Coast PN
+         findCoastPN(req,res);
+      } else if (action === "Prev") {
+         // Find the previous Coast PN
+         findPrevCoastPN(req,res);
+      } else if (action === "Next") {
+         // Find the next Coast PN
+         findNextCoastPN(req,res);
+      } else {
+         console.log(`Unexpected button press '${action}'`);
+      }
+   }
+);
+
+app.post(
+   "/jobdet-search-custpn", 
+   (req, res) => 
+   {
+      const action = req.body["custpn-search"]; // This will be 'Search', 'Prev' or 'Next'
+
+      if (action === "Search") {
+         // Find the specified Coast PN
+         findCustPN(req,res);
+      } else if (action === "Prev") {
+         // Find the previous Coast PN
+         findPrevCustPN(req,res);
+      } else if (action === "Next") {
+         // Find the next Coast PN
+         findNextCustPN(req,res);
       } else {
          console.log(`Unexpected button press '${action}'`);
       }
