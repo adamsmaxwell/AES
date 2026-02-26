@@ -2,7 +2,7 @@ import express from "express";
 import ejs from "ejs";
 import bodyParser from "body-parser";
 import mysql from 'mysql2/promise';
-
+import dotenv  from 'dotenv';
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -11,15 +11,18 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+dotenv.config();
 
-const port = process.env.PORT || 3000;
+const mySQLPort = process.env.DB_PORT || 3306;
+const port =  process.env.PORT || 3000;
 
 // Create the pool once per application instance
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'aes',
-    password: 'password',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: mySQLPort,
     waitForConnections: true, // Default: true, queues requests if limit reached
     connectionLimit: 10,      // Default: 10, maximum number of connections
     queueLimit: 0             // Default: 0, no limit on queued requests
@@ -127,8 +130,8 @@ app.get('/job-detail', (req, res) => {
 );
 
 async function findJob(res, jobNo) {
-   if ((jobNo != null) && (jobNo != '')) {
-      var result = await queryJobInfoSingle('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE JobNo=?', jobNo);
+   if (jobNo != null) {
+      var result = await queryJobInfoSingle('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE JobNo >= ? LIMIT 1', jobNo);
       if (result != null) {
          res.render('job-detail.ejs', result);
       }
@@ -136,7 +139,7 @@ async function findJob(res, jobNo) {
 };
 
 async function findPrevJob(res,jobNo) {
-   if ((jobNo != null) && (jobNo != '')) {
+   if (jobNo != null) {
       var result = await queryJobInfoSingle(
          'SELECT JobNo, CoastPN, CustPN from aes.job WHERE JobNo < ? ORDER BY JobNo DESC LIMIT 1',
          jobNo);
@@ -148,7 +151,7 @@ async function findPrevJob(res,jobNo) {
 };
 
 async function findNextJob(res,jobNo) {
-   if ((jobNo != null) && (jobNo != '')) {
+   if (jobNo != null) {
       var result = await queryJobInfoSingle(
          'SELECT JobNo, CoastPN, CustPN from aes.job WHERE JobNo > ? ORDER BY JobNo ASC LIMIT 1',
          jobNo);
@@ -159,8 +162,8 @@ async function findNextJob(res,jobNo) {
 };
 
 async function findCoastPN(res, coastPN) {
-   if ((coastPN != null) && (coastPN != '')) {
-      var result = await queryJobInfoSingle('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE CoastPN = ? ORDER BY CoastPN ASC, JobNo ASC LIMIT 1', coastPN);
+   if (coastPN != null) {
+      var result = await queryJobInfoSingle('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE CoastPN >= ? ORDER BY CoastPN ASC, JobNo ASC LIMIT 1', coastPN);
       if (result != null) {
          res.render('job-detail.ejs', result);
       }
@@ -168,7 +171,7 @@ async function findCoastPN(res, coastPN) {
 };
 
 async function findPrevCoastPN(res, coastPN, jobNo) {
-   if ((coastPN != null) && (coastPN != '')) {
+   if (coastPN != null) {
       var result = await queryJobInfoDouble(
          'SELECT JobNo, CoastPN, CustPN from aes.job WHERE CoastPN <= ? AND JobNo < ? ORDER BY CoastPN DESC, JobNo DESC LIMIT 1',
          coastPN,
@@ -181,7 +184,7 @@ async function findPrevCoastPN(res, coastPN, jobNo) {
 };
 
 async function findNextCoastPN(res, coastPN, jobNo) {
-   if ((coastPN != null) && (coastPN != '')) {
+   if (coastPN != null) {
       var result = await queryJobInfoDouble(
          'SELECT JobNo, CoastPN, CustPN from aes.job WHERE CoastPN >= ? AND JobNo > ? ORDER BY CoastPN ASC, JobNo ASC LIMIT 1',
          coastPN,
@@ -194,8 +197,8 @@ async function findNextCoastPN(res, coastPN, jobNo) {
 };
 
 async function findCustPN(res, custPN) {
-   if ((custPN != null) && (custPN != '')) {
-      var result = await queryJobInfoSingle('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE CustPN = ? ORDER BY CoastPN ASC, JobNo ASC LIMIT 1', custPN);
+   if (custPN != null) {
+      var result = await queryJobInfoSingle('SELECT JobNo, CoastPN, CustPN FROM aes.job WHERE CustPN >= ? ORDER BY CoastPN ASC, JobNo ASC LIMIT 1', custPN);
       if (result != null) {
          res.render('job-detail.ejs', result);
       }
@@ -203,7 +206,7 @@ async function findCustPN(res, custPN) {
 };
 
 async function findPrevCustPN(res, custPN, jobNo) {
-   if ((custPN != null) && (custPN != '')) {
+   if (custPN != null) {
       var result = await queryJobInfoDouble(
          'SELECT JobNo, CoastPN, CustPN from aes.job WHERE CustPN <= ? AND JobNo < ? ORDER BY CustPN DESC, JobNo DESC LIMIT 1',
          custPN,
@@ -215,7 +218,7 @@ async function findPrevCustPN(res, custPN, jobNo) {
    }   
 };
 async function findNextCustPN(res, custPN, jobNo) {
-   if ((custPN != null) && (custPN != '')) {
+   if (custPN != null) {
       var result = await queryJobInfoDouble(
          'SELECT JobNo, CoastPN, CustPN from aes.job WHERE CustPN >= ? AND JobNo > ? ORDER BY CustPN ASC, JobNo ASC LIMIT 1',
          custPN,
@@ -303,9 +306,9 @@ app.post(
    "/jobdet-search-jobno", 
    (req, res) => 
    {
-      const jobNo = req.body["job-no"];
-      const coastPN = req.body["coast-pn"];
-      const custPN = req.body["cust-pn"];
+      const jobNo = (req.body["job-no"] == "<null>") ? '' : req.body["job-no"];
+      const coastPN = (req.body["coast-pn"] == "<null>") ? '' : req.body["coast-pn"];
+      const custPN = (req.body["cust-pn"] == "<null>") ? '' : req.body["cust-pn"];
 
       var action = req.body["job-search"]; // This will be 'Search', 'Prev' or 'Next'
       if (action !== undefined)
